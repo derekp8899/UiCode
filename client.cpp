@@ -1,6 +1,7 @@
 /*
-Author: Zach Hause
+Author: Zach Hause & Derek Popowski
 zachary.hause@ndus.edu
+derek.a.popowski@und.edu
 UND Robotic Mining Team
 
 This file handles creating a socket connection,
@@ -129,16 +130,16 @@ int sendData(int iResult, SOCKET ConnectSocket) {  //function call that passes c
 	char rXBuffer[20];
 	char rYBuffer[20];
 	char rTBuffer[20];
-	char lTBuffer[20];
-	std::string message = "";
+	char lTBuffer[20];//buffer for everything
+	std::string message = "";//what we are sending out
 	lShoulder = "0";
 	rShoulder = "0";
-	 a = "0";
-	 b = "0";
-	 x = "0";
-	 y = "0";
-	 startButton = "0";
-	selectButton = "0";
+	a = "0";
+	b = "0";
+	x = "0";
+	y = "0";
+	startButton = "0";
+	selectButton = "0";//init all to zero
 	const char* msg;
 	Gamepad gamepad;
 
@@ -223,6 +224,7 @@ int sendData(int iResult, SOCKET ConnectSocket) {  //function call that passes c
 			} else {
 				selectButton = "0";
 			}
+			/* this creates the return buffer string */
 			message.append(lXBuffer);
 			message.append(" ");
 			message.append(lYBuffer);
@@ -251,7 +253,7 @@ int sendData(int iResult, SOCKET ConnectSocket) {  //function call that passes c
 			message.append(" ");
 			message.append(selectButton);
 			msg = message.c_str();
-			printf("\rController Status: %s", message);
+			//printf("\rController Status: %s", message); //debug print
 			iResult = send(ConnectSocket, msg, 160, 0);
 			break;
 		}
@@ -264,9 +266,9 @@ int recieveDistance(int iResult, SOCKET ConnectSocket) {
 	int recvbuflen = DEFAULT_BUFLEN;
 	iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
 	LFspd=0,LRspd=0,RFspd=0,RRspd=0,dist=0;
-	sscanf_s(recvbuf,"%f %f %f %f %f",&LFspd,&RFspd ,&LRspd,&RRspd,&dist);
+	sscanf_s(recvbuf,"%f %f %f %f %f",&LFspd,&RFspd ,&LRspd,&RRspd,&dist);//store the return values into the external vars used by the ui
 	//printw("\n\nour recv buffer: %s\n", recvbuf);
-	//printw("our speeds: %f %f %f %f %f", LFspd, RFspd, LRspd, RRspd, dist);
+	//printw("our speeds: %f %f %f %f %f", LFspd, RFspd, LRspd, RRspd, dist); //more debug prints
 	//printf(" Distance from Marker: %c", recvbuf);
 	return iResult;
 }
