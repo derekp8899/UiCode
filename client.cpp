@@ -116,6 +116,7 @@ SOCKET setup(int iResult, SOCKET ConnectSocket) {  //function call to setup the 
 		WSACleanup();
 		return 1;
 	}
+	isConnected = 1;
 	return ConnectSocket;
 }
 

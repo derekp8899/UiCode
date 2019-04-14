@@ -329,19 +329,19 @@ int main(int argc, char** argv) {
 	    printw("[ IDLE ]\n");
 	    attroff(COLOR_PAIR(hgrey));
 	  }
-	  else if ((LFspd < MAX || LRspd < MAX || RFspd > -MAX || RRspd > -MAX) ||
-		   (LFspd > -MAX || LRspd > -MAX || RFspd < MAX || RRspd < MAX)) {
-	    printw("    ");
-	    attron(COLOR_PAIR(hyellow));
-	    printw("[ RAMP ]\n");
-	    attroff(COLOR_PAIR(hyellow));
-	  }
-	  else {
+	  else if(LFspd == 0.3&& LRspd == 0.3 && RFspd == 0.3 && RRspd == 0.3) {
 	    printw("    ");
 	    attron(COLOR_PAIR(hgreen));
 	    printw("[ FULL ]\n");
 	    attroff(COLOR_PAIR(hgreen));
 	  }
+	  else {
+	    printw("    ");
+	    attron(COLOR_PAIR(hyellow));
+	    printw("[ RAMP ]\n");
+	    attroff(COLOR_PAIR(hyellow));
+	  }
+	  
 	  printw("                  |                            |                    \n");
 	  printw("--------------------------------------------------------------------\n");//a few more rows
 
@@ -349,26 +349,26 @@ int main(int argc, char** argv) {
 	  
 	  printw("\n");
 	  printw("Connections Status: ");
-	  if (1) {
+	  if (ConnectSocket) {
 	    attron(COLOR_PAIR(hgreen));
-	    printw("[ %s ]\n", socketStatus.c_str());
+	    printw("[ %s GOOD ]\n", socketStatus.c_str());
 	    attroff(COLOR_PAIR(hgreen));
 	  }
 	  else {
 	    attron(COLOR_PAIR(hred));
-	    printw("[ %s ]\n", socketStatus.c_str());
+	    printw("[ %s DOWN]\n", socketStatus.c_str());
 	    attroff(COLOR_PAIR(hred));
 	  }
 	  printw("\n");
-	  printw("Controller Port: ");
+	  printw("Controller : ");
 	  if (isConnected) {
 	    attron(COLOR_PAIR(hgreen));
-	    printw("[ %d ]\n", isConnected);
+	    printw("[ %d GOOD ]\n", isConnected);
 	    attroff(COLOR_PAIR(hgreen));
 	  }
 	  else {
 	    attron(COLOR_PAIR(hred));
-	    printw("[ %d ]\n", isConnected);
+	    printw("[ %d DOWN ]\n", isConnected);
 	    attroff(COLOR_PAIR(hred));
 	  }
 	  refresh();//prints all the stuff we just set to the screen
